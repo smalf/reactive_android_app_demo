@@ -29,7 +29,7 @@ public class NetModule {
             final Cache cache,
             final HttpLoggingInterceptor httpLoggingInterceptor
     ) {
-        return new OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor).cache(cache).build();
+        return null; //new OkHttpClient.Builder().addInterceptor(httpLoggingInterceptor).cache(cache).build();
     }
 
     @Provides

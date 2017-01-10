@@ -1,7 +1,13 @@
 package com.demo.smalf.reactiveandroidappdemo.app;
 
+import android.app.Application;
+import android.content.pm.ApplicationInfo;
+
+import java.io.File;
+
 import javax.inject.Named;
 
+import dagger.Module;
 import dagger.Provides;
 
 /**
@@ -9,10 +15,11 @@ import dagger.Provides;
  *
  * @author Serhiy Malofeev
  */
+@Module
 public class AppModule {
     private final DemoApp app;
 
-    private final String appCacheDir;
+    private final File appCacheDir;
     private final int httpCacheSize;
 
     private final String apiDomain;
@@ -35,7 +42,7 @@ public class AppModule {
     public static class Builder {
         private DemoApp app;
 
-        private String appCacheDir;
+        private File appCacheDir;
         private int httpCacheSize;
 
         private String apiDomain;
@@ -49,7 +56,7 @@ public class AppModule {
             return this;
         }
 
-        Builder appCacheDir(String appCacheDir) {
+        Builder appCacheDir(File appCacheDir) {
             this.appCacheDir = appCacheDir;
             return this;
         }
@@ -76,14 +83,26 @@ public class AppModule {
 
     @Provides
     @DemoAppScope
-    public DemoApp provideApp() {
+    public Application provideApp() {
         return app;
     }
 
     @Provides
     @DemoAppScope
+    public DemoApp provideDemoApp() {
+        return app;
+    }
+
+    @Provides
+    @DemoAppScope
+    public ApplicationInfo provideApplicationInfo() {
+        return app.getApplicationInfo();
+    }
+
+    @Provides
+    @DemoAppScope
     @Named(AppComponents.APP_CACHE_DIR)
-    public String provideAppCacheDir() {
+    public File provideAppCacheDir() {
         return appCacheDir;
     }
 
