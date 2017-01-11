@@ -49,7 +49,7 @@ public class LoggingModule {
 
     @Provides
     @DemoAppScope
-    public HttpLoggingInterceptor.Levedd l provideHttpLoggingLevel(
+    public HttpLoggingInterceptor.Level provideHttpLoggingLevel(
             final ApplicationInfo appInfo
     ) {
         return (((appInfo.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0))

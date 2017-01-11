@@ -5,8 +5,13 @@ import android.content.pm.ApplicationInfo;
 
 
 import com.demo.smalf.reactiveandroidappdemo.MainActivity;
+import com.demo.smalf.reactiveandroidappdemo.logging.Logger;
+import com.demo.smalf.reactiveandroidappdemo.logging.LoggingComponents;
 import com.demo.smalf.reactiveandroidappdemo.logging.LoggingModule;
 import com.demo.smalf.reactiveandroidappdemo.net.NetModule;
+import com.demo.smalf.reactiveandroidappdemo.net.services.PostService;
+import com.demo.smalf.reactiveandroidappdemo.net.services.PostsService;
+import com.google.gson.Gson;
 
 import java.io.File;
 
@@ -26,6 +31,9 @@ public interface AppComponentsInjector extends ComponentsInjector {
 
     void inject(MainActivity mainActivity);
 
+    @Named(LoggingComponents.APP_LOGGER)
+    Logger appLoger();
+
     Application app();
     DemoApp demoApp();
     ApplicationInfo applicationInfo();
@@ -35,7 +43,17 @@ public interface AppComponentsInjector extends ComponentsInjector {
 
     @Named(AppComponents.API_KEY)
     String apiKey();
+    @Named(AppComponents.API_DOMAIN)
+    String apiDomain();
 
     OkHttpClient okHttpClient();
+    Gson gson();
+
+    /*
+     *   Providing services for loading posts. Requests will be created in concrete injectors using this services.
+     */
+    PostService postService();
+    PostsService postsService();
+
 
 }

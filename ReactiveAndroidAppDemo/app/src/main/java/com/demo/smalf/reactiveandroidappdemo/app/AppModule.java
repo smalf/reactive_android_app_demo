@@ -18,6 +18,7 @@ import dagger.Provides;
 @Module
 public class AppModule {
     private final DemoApp app;
+    private final String appIdentifier;
 
     private final File appCacheDir;
     private final int httpCacheSize;
@@ -27,6 +28,7 @@ public class AppModule {
 
     private AppModule(Builder builder) {
         this.app = builder.app;
+        this.appIdentifier = builder.appIdentifier;
 
         this.appCacheDir = builder.appCacheDir;
         this.httpCacheSize = builder.httpCacheSize;
@@ -41,6 +43,7 @@ public class AppModule {
 
     public static class Builder {
         private DemoApp app;
+        private String appIdentifier;
 
         private File appCacheDir;
         private int httpCacheSize;
@@ -53,6 +56,11 @@ public class AppModule {
 
         Builder app(DemoApp app) {
             this.app = app;
+            return this;
+        }
+
+        Builder appIdentifier(String appIdentifier) {
+            this.appIdentifier = appIdentifier;
             return this;
         }
 
@@ -85,6 +93,13 @@ public class AppModule {
     @DemoAppScope
     public Application provideApp() {
         return app;
+    }
+
+    @Provides
+    @DemoAppScope
+    @Named(AppComponents.APP_IDENTIFIER)
+    public String provideAppIdentifier() {
+        return appIdentifier;
     }
 
     @Provides
